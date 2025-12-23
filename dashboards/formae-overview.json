@@ -1,0 +1,720 @@
+{
+  "id": null,
+  "uid": "formae-overview",
+  "title": "Formae Overview",
+  "tags": ["formae"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "10s",
+  "templating": {
+    "list": [
+      {
+        "current": { "selected": true, "text": "prometheus", "value": "prometheus" },
+        "hide": 0,
+        "name": "datasource",
+        "query": "prometheus",
+        "type": "datasource"
+      },
+      {
+        "current": { "selected": true, "text": "formae-agent", "value": "formae-agent" },
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "hide": 0,
+        "name": "job",
+        "query": "label_values(go_goroutine_count, job)",
+        "refresh": 1,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": { "selected": true, "text": "All", "value": "$__all" },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Log Level",
+        "multi": false,
+        "name": "logLevel",
+        "options": [
+          { "selected": true, "text": "All", "value": "$__all" },
+          { "selected": false, "text": "debug", "value": "debug" },
+          { "selected": false, "text": "info", "value": "info" },
+          { "selected": false, "text": "warn", "value": "warn" },
+          { "selected": false, "text": "error", "value": "error" }
+        ],
+        "query": "debug,info,warn,error",
+        "type": "custom"
+      },
+      {
+        "current": { "selected": false, "text": "", "value": "" },
+        "hide": 0,
+        "label": "Log Search",
+        "name": "logFilter",
+        "type": "textbox"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 100,
+      "title": "Host Metrics",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "percentunit"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 1 },
+          "id": 101,
+          "targets": [
+            { "expr": "rate(system_cpu_time_seconds_total{job=~\"$job\"}[1m])", "legendFormat": "{{system_cpu_state}}", "refId": "A" }
+          ],
+          "title": "Host CPU",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "bytes"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 1 },
+          "id": 102,
+          "targets": [
+            { "expr": "system_memory_usage_bytes{job=~\"$job\"}", "legendFormat": "{{system_memory_state}}", "refId": "A" }
+          ],
+          "title": "Host Memory",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "Bps"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 9 },
+          "id": 103,
+          "targets": [
+            { "expr": "rate(system_network_io_bytes_total{job=~\"$job\", network_io_direction=\"receive\"}[1m])", "legendFormat": "rx", "refId": "A" },
+            { "expr": "rate(system_network_io_bytes_total{job=~\"$job\", network_io_direction=\"transmit\"}[1m])", "legendFormat": "tx", "refId": "B" }
+          ],
+          "title": "Network I/O",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 0.7 },
+                  { "color": "red", "value": 0.9 }
+                ]
+              },
+              "unit": "percentunit"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 9 },
+          "id": 104,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "textMode": "auto"
+          },
+          "targets": [
+            { "expr": "system_memory_utilization_ratio{job=~\"$job\"}", "legendFormat": "{{system_memory_state}}", "refId": "A" }
+          ],
+          "title": "Memory Utilization",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "Bps"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 17 },
+          "id": 105,
+          "targets": [
+            { "expr": "rate(system_disk_io_read_bytes_total{job=~\"$job\"}[1m])", "legendFormat": "read {{system_device}}", "refId": "A" },
+            { "expr": "rate(system_disk_io_write_bytes_total{job=~\"$job\"}[1m])", "legendFormat": "write {{system_device}}", "refId": "B" }
+          ],
+          "title": "Disk Throughput",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "iops"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 17 },
+          "id": 106,
+          "targets": [
+            { "expr": "rate(system_disk_io_read_ops_total{job=~\"$job\"}[1m])", "legendFormat": "read {{system_device}}", "refId": "A" },
+            { "expr": "rate(system_disk_io_write_ops_total{job=~\"$job\"}[1m])", "legendFormat": "write {{system_device}}", "refId": "B" }
+          ],
+          "title": "Disk IOPS",
+          "type": "timeseries"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 1 },
+      "id": 1,
+      "title": "Process",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+          "min": 0,
+          "unit": "percentunit"
+        }
+      },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 2 },
+      "id": 2,
+      "targets": [
+        { "expr": "rate(process_cpu_time_seconds_total{job=~\"$job\"}[1m])", "legendFormat": "{{cpu_mode}}", "refId": "A" }
+      ],
+      "title": "Process CPU",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 10 },
+      "id": 30,
+      "title": "Go Runtime",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" }
+            }
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 11 },
+          "id": 31,
+          "targets": [
+            { "expr": "go_goroutine_count{job=~\"$job\"}", "legendFormat": "goroutines", "refId": "A" }
+          ],
+          "title": "Goroutines",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never", "stacking": { "mode": "normal" } },
+              "unit": "bytes"
+            }
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 8, "y": 11 },
+          "id": 32,
+          "targets": [
+            { "expr": "go_memory_used_bytes{job=~\"$job\", go_memory_type=\"stack\"}", "legendFormat": "stack", "refId": "A" },
+            { "expr": "go_memory_used_bytes{job=~\"$job\", go_memory_type=\"other\"}", "legendFormat": "heap + other", "refId": "B" }
+          ],
+          "title": "Memory In Use",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "description": "Compares actual heap usage to GC goal.",
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "bytes"
+            }
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 16, "y": 11 },
+          "id": 33,
+          "targets": [
+            { "expr": "go_memory_used_bytes{job=~\"$job\", go_memory_type=\"other\"}", "legendFormat": "heap used", "refId": "A" },
+            { "expr": "go_memory_gc_goal_bytes{job=~\"$job\"}", "legendFormat": "gc goal", "refId": "B" }
+          ],
+          "title": "GC Pressure",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "description": "How fast memory is being allocated.",
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "Bps"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 19 },
+          "id": 34,
+          "targets": [
+            { "expr": "rate(go_memory_allocated_bytes_total{job=~\"$job\"}[1m])", "legendFormat": "bytes/sec", "refId": "A" }
+          ],
+          "title": "Allocation Rate",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "description": "Number of heap allocations per second.",
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "ops"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 19 },
+          "id": 35,
+          "targets": [
+            { "expr": "rate(go_memory_allocations_total{job=~\"$job\"}[1m])", "legendFormat": "allocs/sec", "refId": "A" }
+          ],
+          "title": "Allocations Rate",
+          "type": "timeseries"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 11 },
+      "id": 10,
+      "title": "Ergo Node Metrics",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+              "unit": "s"
+            }
+          },
+          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 12 },
+          "id": 11,
+          "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
+          "targets": [
+            { "expr": "ergo_node_uptime_seconds{job=~\"$job\"}", "legendFormat": "", "refId": "A" }
+          ],
+          "title": "Node Uptime",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }
+            }
+          },
+          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 12 },
+          "id": 12,
+          "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
+          "targets": [
+            { "expr": "ergo_applications_running{job=~\"$job\"}", "legendFormat": "", "refId": "A" }
+          ],
+          "title": "Applications Running",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }
+            }
+          },
+          "gridPos": { "h": 4, "w": 6, "x": 12, "y": 12 },
+          "id": 13,
+          "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
+          "targets": [
+            { "expr": "ergo_processes_total{job=~\"$job\"}", "legendFormat": "", "refId": "A" }
+          ],
+          "title": "Total Processes",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] }
+            }
+          },
+          "gridPos": { "h": 4, "w": 6, "x": 18, "y": 12 },
+          "id": 14,
+          "options": { "colorMode": "value", "graphMode": "none", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
+          "targets": [
+            { "expr": "ergo_processes_zombie{job=~\"$job\"}", "legendFormat": "", "refId": "A" }
+          ],
+          "title": "Zombie Processes",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" }
+            }
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 16 },
+          "id": 15,
+          "targets": [
+            { "expr": "ergo_processes_total{job=~\"$job\"}", "legendFormat": "total", "refId": "A" },
+            { "expr": "ergo_processes_running{job=~\"$job\"}", "legendFormat": "running", "refId": "B" },
+            { "expr": "ergo_processes_zombie{job=~\"$job\"}", "legendFormat": "zombie", "refId": "C" }
+          ],
+          "title": "Processes",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "bytes"
+            }
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 8, "y": 16 },
+          "id": 16,
+          "targets": [
+            { "expr": "ergo_memory_used_bytes{job=~\"$job\"}", "legendFormat": "used", "refId": "A" },
+            { "expr": "ergo_memory_alloc_bytes{job=~\"$job\"}", "legendFormat": "allocated", "refId": "B" }
+          ],
+          "title": "Ergo Memory",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "s"
+            }
+          },
+          "gridPos": { "h": 8, "w": 8, "x": 16, "y": 16 },
+          "id": 17,
+          "targets": [
+            { "expr": "rate(ergo_cpu_user_seconds_total{job=~\"$job\"}[1m])", "legendFormat": "user", "refId": "A" },
+            { "expr": "rate(ergo_cpu_system_seconds_total{job=~\"$job\"}[1m])", "legendFormat": "system", "refId": "B" }
+          ],
+          "title": "Ergo CPU",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" }
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+          "id": 18,
+          "targets": [
+            { "expr": "ergo_registered_names{job=~\"$job\"}", "legendFormat": "names", "refId": "A" },
+            { "expr": "ergo_registered_aliases{job=~\"$job\"}", "legendFormat": "aliases", "refId": "B" },
+            { "expr": "ergo_registered_events{job=~\"$job\"}", "legendFormat": "events", "refId": "C" }
+          ],
+          "title": "Registered Entities",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" }
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
+          "id": 19,
+          "targets": [
+            { "expr": "ergo_applications_total{job=~\"$job\"}", "legendFormat": "total", "refId": "A" },
+            { "expr": "ergo_applications_running{job=~\"$job\"}", "legendFormat": "running", "refId": "B" }
+          ],
+          "title": "Applications",
+          "type": "timeseries"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 12 },
+      "id": 20,
+      "title": "Ergo Network Metrics",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }
+            }
+          },
+          "gridPos": { "h": 8, "w": 6, "x": 0, "y": 13 },
+          "id": 21,
+          "options": { "colorMode": "value", "graphMode": "area", "justifyMode": "auto", "orientation": "auto", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
+          "targets": [
+            { "expr": "ergo_connected_nodes_total{job=~\"$job\"}", "legendFormat": "", "refId": "A" }
+          ],
+          "title": "Connected Nodes",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "ops"
+            }
+          },
+          "gridPos": { "h": 8, "w": 9, "x": 6, "y": 13 },
+          "id": 22,
+          "targets": [
+            { "expr": "rate(ergo_remote_messages_in_total{job=~\"$job\"}[1m])", "legendFormat": "in {{node}}", "refId": "A" },
+            { "expr": "rate(ergo_remote_messages_out_total{job=~\"$job\"}[1m])", "legendFormat": "out {{node}}", "refId": "B" }
+          ],
+          "title": "Remote Messages",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "Bps"
+            }
+          },
+          "gridPos": { "h": 8, "w": 9, "x": 15, "y": 13 },
+          "id": 23,
+          "targets": [
+            { "expr": "rate(ergo_remote_bytes_in_total{job=~\"$job\"}[1m])", "legendFormat": "in {{node}}", "refId": "A" },
+            { "expr": "rate(ergo_remote_bytes_out_total{job=~\"$job\"}[1m])", "legendFormat": "out {{node}}", "refId": "B" }
+          ],
+          "title": "Remote Bytes",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+              "unit": "s"
+            }
+          },
+          "gridPos": { "h": 4, "w": 24, "x": 0, "y": 21 },
+          "id": 24,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "textMode": "auto"
+          },
+          "targets": [
+            { "expr": "ergo_remote_node_uptime_seconds{job=~\"$job\"}", "legendFormat": "{{node}}", "refId": "A" }
+          ],
+          "title": "Remote Node Connection Uptime",
+          "type": "stat"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 13 },
+      "id": 40,
+      "title": "Database",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" }
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+          "id": 41,
+          "targets": [
+            { "expr": "pgxpool_acquired_connections{job=~\"$job\"}", "legendFormat": "acquired", "refId": "A" },
+            { "expr": "pgxpool_idle_connections{job=~\"$job\"}", "legendFormat": "idle", "refId": "B" },
+            { "expr": "pgxpool_total_connections{job=~\"$job\"}", "legendFormat": "total", "refId": "C" },
+            { "expr": "pgxpool_max_connections{job=~\"$job\"}", "legendFormat": "max", "refId": "D" }
+          ],
+          "title": "Connection Pool",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "ops"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+          "id": 42,
+          "targets": [
+            { "expr": "sum(rate(db_client_operation_duration_seconds_count{job=~\"$job\"}[1m])) by (pgx_operation_type)", "legendFormat": "{{pgx_operation_type}}", "refId": "A" }
+          ],
+          "title": "Query Rate",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" },
+              "unit": "s"
+            }
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 22 },
+          "id": 43,
+          "targets": [
+            { "expr": "histogram_quantile(0.50, sum(rate(db_client_operation_duration_seconds_bucket{job=~\"$job\"}[5m])) by (le))", "legendFormat": "p50", "refId": "A" },
+            { "expr": "histogram_quantile(0.95, sum(rate(db_client_operation_duration_seconds_bucket{job=~\"$job\"}[5m])) by (le))", "legendFormat": "p95", "refId": "B" },
+            { "expr": "histogram_quantile(0.99, sum(rate(db_client_operation_duration_seconds_bucket{job=~\"$job\"}[5m])) by (le))", "legendFormat": "p99", "refId": "C" }
+          ],
+          "title": "Query Duration (p50, p95, p99)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "description": "Empty acquires mean queries had to wait for a connection.",
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": { "fillOpacity": 10, "lineWidth": 2, "showPoints": "never" }
+            },
+            "overrides": [
+              {
+                "matcher": { "id": "byName", "options": "wait time" },
+                "properties": [
+                  { "id": "unit", "value": "ns" },
+                  { "id": "custom.axisPlacement", "value": "right" }
+                ]
+              }
+            ]
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 22 },
+          "id": 44,
+          "targets": [
+            { "expr": "rate(pgxpool_empty_acquire_total{job=~\"$job\"}[1m])", "legendFormat": "empty acquires/s", "refId": "A" },
+            { "expr": "rate(pgxpool_empty_acquire_wait_time_nanoseconds_total{job=~\"$job\"}[1m])", "legendFormat": "wait time", "refId": "B" }
+          ],
+          "title": "Connection Pool Health",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "description": "SQL queries aggregated from span metrics.",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": [
+              {
+                "matcher": { "id": "byName", "options": "Value" },
+                "properties": [
+                  { "id": "unit", "value": "s" },
+                  { "id": "displayName", "value": "Avg Duration" },
+                  { "id": "custom.width", "value": 120 }
+                ]
+              }
+            ]
+          },
+          "gridPos": { "h": 10, "w": 24, "x": 0, "y": 30 },
+          "id": 45,
+          "options": { "sortBy": [{ "desc": true, "displayName": "Avg Duration" }] },
+          "targets": [
+            { "expr": "topk(10, sum by (span_name) (traces_spanmetrics_latency_sum{service_name=\"formae-agent\", span_name=~\"query.*|prepare.*\"}) / sum by (span_name) (traces_spanmetrics_latency_count{service_name=\"formae-agent\", span_name=~\"query.*|prepare.*\"}))", "format": "table", "instant": true, "legendFormat": "{{span_name}}", "refId": "A" }
+          ],
+          "title": "Slowest Queries (by avg duration)",
+          "transformations": [
+            { "id": "organize", "options": { "excludeByName": { "Time": true }, "renameByName": { "span_name": "Query" } } }
+          ],
+          "type": "table"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "id": 50,
+      "title": "Logs",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "loki", "uid": "loki" },
+      "gridPos": { "h": 16, "w": 24, "x": 0, "y": 15 },
+      "id": 51,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "expr": "{service_name=\"formae-agent\"} | detected_level=~\"$logLevel\" |~ \"$logFilter\"",
+          "refId": "A"
+        }
+      ],
+      "title": "Application Logs",
+      "type": "logs",
+      "links": [
+        {
+          "title": "Explore in Loki",
+          "url": "/explore?orgId=1&left={\"datasource\":\"loki\",\"queries\":[{\"refId\":\"A\",\"expr\":\"{service_name=\\\"formae-agent\\\"}\"}],\"range\":{\"from\":\"now-1h\",\"to\":\"now\"}}",
+          "targetBlank": true
+        }
+      ]
+    }
+  ]
+}
