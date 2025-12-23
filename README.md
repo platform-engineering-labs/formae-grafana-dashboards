@@ -20,26 +20,16 @@ A comprehensive dashboard for monitoring the Formae agent:
 
 ## Installation
 
-### With LGTM Stack (Recommended)
-
-Use the [lgtm-stack](https://github.com/platform-engineering-labs/lgtm-stack) which automatically provisions these dashboards:
-
-```bash
-git clone https://github.com/platform-engineering-labs/lgtm-stack.git
-git clone https://github.com/platform-engineering-labs/formae-grafana-dashboards.git
-cd lgtm-stack
-docker compose up -d
-```
-
 ### Manual Import
 
-1. Open Grafana and navigate to **Dashboards > Import**
-2. Upload the JSON file from `dashboards/formae-overview.json`
-3. Select your Prometheus and Loki datasources
+1. Download `dashboards/formae-overview.json` from this repository
+2. In Grafana, navigate to **Dashboards > Import**
+3. Upload the JSON file or paste its contents
+4. Select your Prometheus and Loki datasources
 
 ### Provisioning
 
-Add to your Grafana provisioning configuration:
+For automated provisioning, clone this repository and add to your Grafana provisioning configuration:
 
 ```yaml
 apiVersion: 1
