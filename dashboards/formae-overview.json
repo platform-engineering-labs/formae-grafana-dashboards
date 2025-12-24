@@ -1774,7 +1774,7 @@
                 "lineWidth": 2,
                 "showPoints": "never"
               },
-              "unit": "s"
+              "unit": "percentunit"
             }
           },
           "gridPos": {
@@ -1796,7 +1796,7 @@
               "refId": "B"
             }
           ],
-          "title": "Ergo CPU",
+          "title": "Ergo CPU (per core)",
           "type": "timeseries"
         },
         {
@@ -2329,7 +2329,7 @@
           },
           "targets": [
             {
-              "expr": "topk(10, sum by (span_name) (traces_spanmetrics_latency_sum{service_name=\"formae-agent\", span_name=~\"query.*|prepare.*\"}) / sum by (span_name) (traces_spanmetrics_latency_count{service_name=\"formae-agent\", span_name=~\"query.*|prepare.*\"}))",
+              "expr": "topk(10, sum by (span_name) (traces_spanmetrics_latency_sum{service=\"formae-agent\", span_kind=\"SPAN_KIND_CLIENT\"}) / sum by (span_name) (traces_spanmetrics_latency_count{service=\"formae-agent\", span_kind=\"SPAN_KIND_CLIENT\"}))",
               "format": "table",
               "instant": true,
               "legendFormat": "{{span_name}}",
@@ -2357,12 +2357,561 @@
       "type": "row"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 36
+      },
+      "id": 300,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "tokens/s",
+                "axisPlacement": "auto",
+                "fillOpacity": 10,
+                "lineWidth": 2,
+                "showPoints": "never"
+              },
+              "unit": "ops"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 37
+          },
+          "id": 301,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "rate(formae_rate_limiter_tokens_requested_total[1m])",
+              "legendFormat": "{{namespace}} - {{requester}} (requested)",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "rate(formae_rate_limiter_tokens_granted_total[1m])",
+              "legendFormat": "{{namespace}} - {{requester}} (granted)",
+              "refId": "B"
+            }
+          ],
+          "title": "Token Request Rate",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "axisLabel": "utilization",
+                "fillOpacity": 70,
+                "lineWidth": 0
+              },
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 0.5
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 37
+          },
+          "id": 302,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "formae_rate_limiter_bucket_utilization_ratio",
+              "legendFormat": "{{namespace}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Bucket Utilization",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "tokens",
+                "axisPlacement": "auto",
+                "fillOpacity": 10,
+                "lineWidth": 2
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 45
+          },
+          "id": 303,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "formae_rate_limiter_bucket_tokens_available",
+              "legendFormat": "{{namespace}} (available)",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "formae_rate_limiter_bucket_capacity",
+              "legendFormat": "{{namespace}} (capacity)",
+              "refId": "B"
+            }
+          ],
+          "title": "Available Tokens",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "axisLabel": "efficiency",
+                "fillOpacity": 10,
+                "lineWidth": 2
+              },
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 0.7
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.9
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 45
+          },
+          "id": 304,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "rate(formae_rate_limiter_tokens_granted_total[1m]) / rate(formae_rate_limiter_tokens_requested_total[1m])",
+              "legendFormat": "{{namespace}} - {{requester}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Grant Efficiency (Granted / Requested)",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Rate Limiter",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 400,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "duration",
+                "axisPlacement": "auto",
+                "fillOpacity": 10,
+                "lineWidth": 2
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 38
+          },
+          "id": 401,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "p95"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "histogram_quantile(0.50, rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m]))",
+              "legendFormat": "p50 - {{plugin}} {{operation}}",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "histogram_quantile(0.95, rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m]))",
+              "legendFormat": "p95 - {{plugin}} {{operation}}",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "histogram_quantile(0.99, rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m]))",
+              "legendFormat": "p99 - {{plugin}} {{operation}}",
+              "refId": "C"
+            }
+          ],
+          "title": "Plugin Operation Duration",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "ops/s",
+                "axisPlacement": "auto",
+                "fillOpacity": 10,
+                "lineWidth": 2
+              },
+              "unit": "ops"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 38
+          },
+          "id": 402,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "sum by (plugin, operation, result) (rate(formae_plugin_operation_total[1m]))",
+              "legendFormat": "{{plugin}} {{operation}} ({{result}})",
+              "refId": "A"
+            }
+          ],
+          "title": "Plugin Operation Rate",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "axisLabel": "success rate",
+                "fillOpacity": 10,
+                "lineWidth": 2
+              },
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 0.9
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.95
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 46
+          },
+          "id": 403,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "sum by (plugin, operation) (rate(formae_plugin_operation_total{result=\"success\"}[5m])) / sum by (plugin, operation) (rate(formae_plugin_operation_total[5m]))",
+              "legendFormat": "{{plugin}} {{operation}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Plugin Operation Success Rate",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "retries/s",
+                "axisPlacement": "auto",
+                "fillOpacity": 10,
+                "lineWidth": 2
+              },
+              "unit": "ops"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 46
+          },
+          "id": 404,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "expr": "sum by (plugin, operation) (rate(formae_plugin_operation_retries_total[1m]))",
+              "legendFormat": "{{plugin}} {{operation}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Plugin Operation Retries",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Plugin Metrics",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
       },
       "id": 50,
       "title": "Logs",
@@ -2377,7 +2926,7 @@
         "h": 16,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 39
       },
       "id": 51,
       "links": [
