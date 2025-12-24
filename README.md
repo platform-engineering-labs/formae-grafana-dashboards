@@ -1,12 +1,12 @@
 # Formae Grafana Dashboards
 
-Pre-built Grafana dashboards for monitoring [Formae](https://github.com/platform-engineering-labs/formae) infrastructure.
+Pre-built Grafana dashboards for monitoring [formae](https://github.com/platform-engineering-labs/formae) infrastructure.
 
 ## Dashboards
 
 ### Formae Overview
 
-A comprehensive dashboard for monitoring the Formae agent:
+A comprehensive dashboard for monitoring the formae agent:
 
 | Section | Metrics |
 |---------|---------|
@@ -36,7 +36,7 @@ apiVersion: 1
 providers:
   - name: 'formae'
     orgId: 1
-    folder: 'Formae'
+    folder: 'formae'
     type: file
     options:
       path: /path/to/formae-grafana-dashboards/dashboards
@@ -51,7 +51,7 @@ providers:
 
 ## Formae Configuration
 
-Enable OpenTelemetry in your Formae configuration:
+Enable OpenTelemetry in your formae configuration:
 
 ```pkl
 agent {
