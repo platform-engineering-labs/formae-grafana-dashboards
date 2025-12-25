@@ -856,7 +856,7 @@
                 "lineWidth": 2,
                 "showPoints": "never"
               },
-              "unit": "percentunit"
+              "unit": "short"
             }
           },
           "gridPos": {
@@ -1774,7 +1774,7 @@
                 "lineWidth": 2,
                 "showPoints": "never"
               },
-              "unit": "percentunit"
+              "unit": "short"
             }
           },
           "gridPos": {
@@ -2193,7 +2193,7 @@
                 "lineWidth": 2,
                 "showPoints": "never"
               },
-              "unit": "s"
+              "unit": "ms"
             }
           },
           "gridPos": {
@@ -2302,7 +2302,7 @@
                   },
                   {
                     "id": "displayName",
-                    "value": "Avg Duration"
+                    "value": "p99 Duration"
                   },
                   {
                     "id": "custom.width",
@@ -2323,20 +2323,20 @@
             "sortBy": [
               {
                 "desc": true,
-                "displayName": "Avg Duration"
+                "displayName": "p99 Duration"
               }
             ]
           },
           "targets": [
             {
-              "expr": "topk(10, sum by (span_name) (traces_spanmetrics_latency_sum{service=\"formae-agent\", span_kind=\"SPAN_KIND_CLIENT\"}) / sum by (span_name) (traces_spanmetrics_latency_count{service=\"formae-agent\", span_kind=\"SPAN_KIND_CLIENT\"}))",
+              "expr": "topk(10, max_over_time(histogram_quantile(0.99, sum by (span_name, le) (rate(traces_spanmetrics_latency_bucket{service=\"formae-agent\", span_kind=\"SPAN_KIND_CLIENT\"}[5m])))[$__range:1m]))",
               "format": "table",
               "instant": true,
               "legendFormat": "{{span_name}}",
               "refId": "A"
             }
           ],
-          "title": "Slowest Queries (by avg duration)",
+          "title": "Slowest Queries (by p99 duration)",
           "transformations": [
             {
               "id": "organize",
