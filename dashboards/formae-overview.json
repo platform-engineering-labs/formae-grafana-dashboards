@@ -65,7 +65,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "formae_stacks_total",
+          "expr": "formae_stacks_total{job=\"formae-agent\"}",
           "refId": "A"
         }
       ],
@@ -297,7 +297,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "formae_clients_connected",
+          "expr": "formae_clients_connected{job=\"formae-agent\"}",
           "refId": "A"
         }
       ],
@@ -356,7 +356,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "ergo_node_uptime_seconds",
+          "expr": "ergo_node_uptime_seconds{job=~\"$job\"}",
           "refId": "A"
         }
       ],
@@ -2911,7 +2911,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 39
       },
       "id": 50,
       "title": "Logs",
@@ -2991,6 +2991,26 @@
         "type": "query"
       },
       {
+        "allValue": "formae-plugin-.*",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Plugin",
+        "multi": true,
+        "name": "plugin",
+        "query": "label_values(ergo_node_uptime_seconds{job=~\"formae-plugin-.*\"}, job)",
+        "refresh": 1,
+        "type": "query"
+      },
+      {
         "allValue": ".*",
         "current": {
           "selected": true,
@@ -3046,7 +3066,21 @@
     ]
   },
   "timezone": "browser",
-  "title": "Formae Overview",
+  "title": "Formae Agent",
   "uid": "formae-overview",
-  "version": 2
+  "version": 2,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Plugin Dashboard",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/formae-plugins/formae-plugins"
+    }
+  ]
 }
