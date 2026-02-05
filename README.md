@@ -4,25 +4,44 @@ Pre-built Grafana dashboards for monitoring [formae](https://github.com/platform
 
 ## Dashboards
 
-### Formae Overview
+### Formae Agent
 
 A comprehensive dashboard for monitoring the formae agent:
 
 | Section | Metrics |
 |---------|---------|
-| **Formae Stats** | Stacks, targets, managed/unmanaged resources, clients, agent uptime, errors, commands |
-| **Host Metrics** | CPU, memory, network I/O, disk I/O |
+| **Formae Stats** | Stacks, targets, managed/unmanaged resources, clients, agent uptime, resource errors, commands by state/type |
+| **Host Metrics** | CPU, memory, network I/O, disk throughput and IOPS |
 | **Process** | Agent CPU and memory usage |
-| **Go Runtime** | Goroutines, GC, memory allocation |
-| **Ergo Metrics** | Actor system health (node, processes, network) |
-| **Database** | Connection pool and query performance |
+| **Go Runtime** | Goroutines, memory in use, GC pressure, allocation rate |
+| **Ergo Node Metrics** | Node uptime, applications, processes, zombie processes, memory, CPU, registered entities |
+| **Ergo Network Metrics** | Connected nodes, remote messages and bytes, connection uptime |
+| **Database** | Connection pool, query rate and duration, pool health, slowest queries |
+| **Rate Limiter** | Token request rate, bucket utilization, available tokens, grant efficiency |
+| **Plugin Metrics** | Operation duration, rate, success rate, retries |
 | **Logs** | Application logs with level filtering |
+
+### Formae Plugins
+
+A dedicated dashboard for monitoring formae plugins:
+
+| Section | Metrics |
+|---------|---------|
+| **Plugin Stats** | Targets, managed/unmanaged resources, node uptime, connected nodes, goroutines, resource errors |
+| **Process** | Plugin CPU and memory usage |
+| **Go Runtime** | Goroutines, memory in use, allocation rate, GC pressure |
+| **Ergo Node Metrics** | Processes, zombie processes, memory, CPU, registered entities |
+| **Ergo Network Metrics** | Remote messages and bytes, connection uptime |
+| **Plugin Metrics** | Operation duration, rate, success rate, retries |
+| **Logs** | Plugin logs filtered by plugin name prefix |
 
 ## Installation
 
 ### Manual Import
 
-1. Download `dashboards/formae-overview.json` from this repository
+1. Download the dashboard JSON files from the `dashboards/` directory:
+   - `formae-overview.json` (Formae Agent)
+   - `formae-plugin.json` (Formae Plugins)
 2. In Grafana, navigate to **Dashboards > Import**
 3. Upload the JSON file or paste its contents
 4. Select your Prometheus and Loki datasources
