@@ -85,6 +85,13 @@ agent {
 }
 ```
 
+## Note on hub-instance dashboards
+
+`formae-hub-overview` and `formae-hub-stats` have moved to an internal
+repository. They monitor a specific deployment of the PEL-operated hub service,
+not the formae agent itself — if you're running formae yourself, you don't need
+them.
+
 ## License
 
 BSD 3-Clause License - see [LICENSE](LICENSE) for details.
