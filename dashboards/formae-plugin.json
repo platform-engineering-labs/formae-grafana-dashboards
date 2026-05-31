@@ -81,7 +81,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum(formae_targets_total{job=~\"$plugin\"})",
+          "expr": "sum(formae_targets_total{plugin=~\"(?i)$plugin\"})",
           "legendFormat": "Targets",
           "refId": "A"
         }
@@ -136,7 +136,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum(formae_resources_managed{job=~\"$plugin\"})",
+          "expr": "sum(formae_resources_managed{plugin=~\"(?i)$plugin\"})",
           "legendFormat": "Managed",
           "refId": "A"
         }
@@ -191,7 +191,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum(formae_resources_unmanaged{job=~\"$plugin\"})",
+          "expr": "sum(formae_resources_unmanaged{plugin=~\"(?i)$plugin\"})",
           "legendFormat": "Unmanaged",
           "refId": "A"
         }
@@ -247,8 +247,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "ergo_node_uptime_seconds{job=~\"$plugin\"}",
-          "legendFormat": "{{job}}",
+          "expr": "ergo_node_uptime_seconds{job=~\"formae-plugin-$plugin\"}",
           "refId": "A"
         }
       ],
@@ -302,8 +301,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum by (job) (ergo_connected_nodes_total{job=~\"$plugin\"})",
-          "legendFormat": "{{job}}",
+          "expr": "sum by (job) (ergo_connected_nodes_total{job=~\"formae-plugin-$plugin\"})",
           "refId": "A"
         }
       ],
@@ -357,8 +355,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "go_goroutine_count{job=~\"$plugin\"}",
-          "legendFormat": "{{job}}",
+          "expr": "go_goroutine_count{job=~\"formae-plugin-$plugin\"}",
           "refId": "A"
         }
       ],
@@ -447,7 +444,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "formae_resource_errors{job=~\"$plugin\"}",
+          "expr": "formae_resource_errors{plugin=~\"(?i)$plugin\"}",
           "legendFormat": "{{resource_type}}",
           "refId": "A"
         }
@@ -496,8 +493,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(process_cpu_time_seconds_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}}",
+              "expr": "rate(process_cpu_time_seconds_total{job=~\"formae-plugin-$plugin\"}[1m])",
+              "legendFormat": "{{cpu_mode}}",
               "refId": "A"
             }
           ],
@@ -535,9 +532,9 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "go_memory_used_bytes{job=~\"$plugin\", go_memory_type=\"other\"}",
-              "legendFormat": "{{job}}",
-              "refId": "A"
+              "expr": "go_memory_used_bytes{job=~\"formae-plugin-$plugin\", go_memory_type=\"other\"}",
+              "refId": "A",
+              "legendFormat": "Heap + Other"
             }
           ],
           "title": "Process Memory",
@@ -587,8 +584,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "go_goroutine_count{job=~\"$plugin\"}",
-              "legendFormat": "{{job}}",
+              "expr": "go_goroutine_count{job=~\"formae-plugin-$plugin\"}",
               "refId": "A"
             }
           ],
@@ -626,8 +622,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "go_memory_used_bytes{job=~\"$plugin\", go_memory_type=\"stack\"}",
-              "legendFormat": "{{job}} stack",
+              "expr": "go_memory_used_bytes{job=~\"formae-plugin-$plugin\", go_memory_type=\"stack\"}",
+              "legendFormat": "stack",
               "refId": "A"
             },
             {
@@ -635,8 +631,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "go_memory_used_bytes{job=~\"$plugin\", go_memory_type=\"other\"}",
-              "legendFormat": "{{job}} heap",
+              "expr": "go_memory_used_bytes{job=~\"formae-plugin-$plugin\", go_memory_type=\"other\"}",
+              "legendFormat": "heap + other",
               "refId": "B"
             }
           ],
@@ -674,8 +670,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(go_memory_allocated_bytes_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}}",
+              "expr": "rate(go_memory_allocated_bytes_total{job=~\"formae-plugin-$plugin\"}[1m])",
               "refId": "A"
             }
           ],
@@ -713,8 +708,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(go_memory_allocations_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}}",
+              "expr": "rate(go_memory_allocations_total{job=~\"formae-plugin-$plugin\"}[1m])",
               "refId": "A"
             }
           ],
@@ -752,8 +746,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "go_memory_used_bytes{job=~\"$plugin\", go_memory_type=\"other\"}",
-              "legendFormat": "{{job}}",
+              "expr": "go_memory_used_bytes{job=~\"formae-plugin-$plugin\", go_memory_type=\"other\"}",
               "refId": "A"
             }
           ],
@@ -804,8 +797,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_processes_total{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} total",
+              "expr": "ergo_processes_total{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "total",
               "refId": "A"
             },
             {
@@ -813,8 +806,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_processes_running{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} running",
+              "expr": "ergo_processes_running{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "running",
               "refId": "B"
             }
           ],
@@ -868,8 +861,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_processes_zombie{job=~\"$plugin\"}",
-              "legendFormat": "{{job}}",
+              "expr": "ergo_processes_zombie{job=~\"formae-plugin-$plugin\"}",
               "refId": "A"
             }
           ],
@@ -907,8 +899,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_memory_used_bytes{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} used",
+              "expr": "ergo_memory_used_bytes{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "used",
               "refId": "A"
             },
             {
@@ -916,8 +908,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_memory_alloc_bytes{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} alloc",
+              "expr": "ergo_memory_alloc_bytes{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "allocated",
               "refId": "B"
             }
           ],
@@ -955,8 +947,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(ergo_cpu_user_seconds_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}} user",
+              "expr": "rate(ergo_cpu_user_seconds_total{job=~\"formae-plugin-$plugin\"}[1m])",
+              "legendFormat": "user",
               "refId": "A"
             },
             {
@@ -964,8 +956,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(ergo_cpu_system_seconds_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}} system",
+              "expr": "rate(ergo_cpu_system_seconds_total{job=~\"formae-plugin-$plugin\"}[1m])",
+              "legendFormat": "system",
               "refId": "B"
             }
           ],
@@ -1002,8 +994,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_registered_names{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} names",
+              "expr": "ergo_registered_names{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "names",
               "refId": "A"
             },
             {
@@ -1011,8 +1003,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_registered_aliases{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} aliases",
+              "expr": "ergo_registered_aliases{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "aliases",
               "refId": "B"
             },
             {
@@ -1020,8 +1012,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_registered_events{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} events",
+              "expr": "ergo_registered_events{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "events",
               "refId": "C"
             }
           ],
@@ -1073,8 +1065,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(ergo_remote_messages_in_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}} in {{node}}",
+              "expr": "rate(ergo_remote_messages_in_total{job=~\"formae-plugin-$plugin\"}[1m])",
+              "legendFormat": "in {{node}}",
               "refId": "A"
             },
             {
@@ -1082,8 +1074,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(ergo_remote_messages_out_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}} out {{node}}",
+              "expr": "rate(ergo_remote_messages_out_total{job=~\"formae-plugin-$plugin\"}[1m])",
+              "legendFormat": "out {{node}}",
               "refId": "B"
             }
           ],
@@ -1121,8 +1113,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(ergo_remote_bytes_in_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}} in {{node}}",
+              "expr": "rate(ergo_remote_bytes_in_total{job=~\"formae-plugin-$plugin\"}[1m])",
+              "legendFormat": "in {{node}}",
               "refId": "A"
             },
             {
@@ -1130,8 +1122,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "rate(ergo_remote_bytes_out_total{job=~\"$plugin\"}[1m])",
-              "legendFormat": "{{job}} out {{node}}",
+              "expr": "rate(ergo_remote_bytes_out_total{job=~\"formae-plugin-$plugin\"}[1m])",
+              "legendFormat": "out {{node}}",
               "refId": "B"
             }
           ],
@@ -1187,8 +1179,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "ergo_remote_node_uptime_seconds{job=~\"$plugin\"}",
-              "legendFormat": "{{job}} -> {{node}}",
+              "expr": "ergo_remote_node_uptime_seconds{job=~\"formae-plugin-$plugin\"}",
+              "legendFormat": "{{node}}",
               "refId": "A"
             }
           ],
@@ -1254,8 +1246,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "histogram_quantile(0.50, rate(formae_plugin_operation_duration_ms_milliseconds_bucket{job=~\"$plugin\"}[5m]))",
-              "legendFormat": "p50 - {{plugin}} {{operation}}",
+              "expr": "histogram_quantile(0.50, sum by (plugin, operation, le) (rate(formae_plugin_operation_duration_ms_milliseconds_bucket{job=~\"formae-plugin-$plugin\"}[5m])))",
+              "legendFormat": "p50 {{operation}}",
               "refId": "A"
             },
             {
@@ -1263,8 +1255,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "histogram_quantile(0.95, rate(formae_plugin_operation_duration_ms_milliseconds_bucket{job=~\"$plugin\"}[5m]))",
-              "legendFormat": "p95 - {{plugin}} {{operation}}",
+              "expr": "histogram_quantile(0.95, sum by (plugin, operation, le) (rate(formae_plugin_operation_duration_ms_milliseconds_bucket{job=~\"formae-plugin-$plugin\"}[5m])))",
+              "legendFormat": "p95 {{operation}}",
               "refId": "B"
             },
             {
@@ -1272,8 +1264,8 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "histogram_quantile(0.99, rate(formae_plugin_operation_duration_ms_milliseconds_bucket{job=~\"$plugin\"}[5m]))",
-              "legendFormat": "p99 - {{plugin}} {{operation}}",
+              "expr": "histogram_quantile(0.99, sum by (plugin, operation, le) (rate(formae_plugin_operation_duration_ms_milliseconds_bucket{job=~\"formae-plugin-$plugin\"}[5m])))",
+              "legendFormat": "p99 {{operation}}",
               "refId": "C"
             }
           ],
@@ -1325,7 +1317,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "sum by (plugin, operation, result) (rate(formae_plugin_operation_total{job=~\"$plugin\"}[1m]))",
+              "expr": "sum by (plugin, operation, result) (rate(formae_plugin_operation_total{job=~\"formae-plugin-$plugin\"}[1m]))",
               "legendFormat": "{{plugin}} {{operation}} ({{result}})",
               "refId": "A"
             }
@@ -1395,7 +1387,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "sum by (plugin, operation) (rate(formae_plugin_operation_total{job=~\"$plugin\", result=\"success\"}[5m])) / sum by (plugin, operation) (rate(formae_plugin_operation_total{job=~\"$plugin\"}[5m]))",
+              "expr": "sum by (plugin, operation) (rate(formae_plugin_operation_total{job=~\"formae-plugin-$plugin\", result=\"success\"}[5m])) / sum by (plugin, operation) (rate(formae_plugin_operation_total{job=~\"formae-plugin-$plugin\"}[5m]))",
               "legendFormat": "{{plugin}} {{operation}}",
               "refId": "A"
             }
@@ -1448,7 +1440,7 @@
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "expr": "sum by (plugin, operation) (rate(formae_plugin_operation_retries_total{job=~\"$plugin\"}[1m]))",
+              "expr": "sum by (plugin, operation) (rate(formae_plugin_operation_retries_total{job=~\"formae-plugin-$plugin\"}[1m]))",
               "legendFormat": "{{plugin}} {{operation}}",
               "refId": "A"
             }
@@ -1508,7 +1500,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "{service_name=\"formae-agent\"} |~ \"\\\\[$pluginName\\\\]\" | detected_level=~\"$logLevel\" |~ \"$logFilter\"",
+          "expr": "{service_name=\"formae-agent\"} |~ \"(?i)namespace=$plugin\" | detected_level=~\"$logLevel\" |~ \"$logFilter\"",
           "refId": "A"
         }
       ],
@@ -1544,59 +1536,26 @@
         "type": "datasource"
       },
       {
-        "allValue": "formae-plugin-.*",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
+        "allValue": null,
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(ergo_node_uptime_seconds{job=~\"formae-plugin-.*\"}, job)",
+        "definition": "label_values(ergo_node_uptime_seconds{job=~\"formae-plugin-.+\"}, job)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": "Plugin",
-        "multi": true,
+        "multi": false,
         "name": "plugin",
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(ergo_node_uptime_seconds{job=~\"formae-plugin-.*\"}, job)",
+          "query": "label_values(ergo_node_uptime_seconds{job=~\"formae-plugin-.+\"}, job)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "allValue": "[a-z-]+",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(ergo_node_uptime_seconds{job=~\"formae-plugin-.*\"}, job)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Plugin (Logs)",
-        "multi": true,
-        "name": "pluginName",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(ergo_node_uptime_seconds{job=~\"formae-plugin-.*\"}, job)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "/formae-plugin-(.*)/",
+        "regex": "/formae-plugin-(.+)/",
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
@@ -1604,7 +1563,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -1621,26 +1580,26 @@
           },
           {
             "selected": false,
-            "text": "debug",
-            "value": "debug"
+            "text": "DEBUG",
+            "value": "DEBUG"
           },
           {
             "selected": false,
-            "text": "info",
-            "value": "info"
+            "text": "INFO",
+            "value": "INFO"
           },
           {
             "selected": false,
-            "text": "warn",
-            "value": "warn"
+            "text": "WARN",
+            "value": "WARN"
           },
           {
             "selected": false,
-            "text": "error",
-            "value": "error"
+            "text": "ERROR",
+            "value": "ERROR"
           }
         ],
-        "query": "debug,info,warn,error",
+        "query": "DEBUG,INFO,WARN,ERROR",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
