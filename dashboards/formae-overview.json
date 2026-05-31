@@ -863,7 +863,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 1
+            "y": 23
           },
           "id": 101,
           "targets": [
@@ -898,7 +898,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 1
+            "y": 23
           },
           "id": 102,
           "targets": [
@@ -933,7 +933,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 9
+            "y": 31
           },
           "id": 103,
           "targets": [
@@ -987,7 +987,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 9
+            "y": 31
           },
           "id": 104,
           "options": {
@@ -1036,7 +1036,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 17
+            "y": 39
           },
           "id": 105,
           "targets": [
@@ -1076,7 +1076,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 17
+            "y": 39
           },
           "id": 106,
           "targets": [
@@ -1283,7 +1283,7 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 11
+            "y": 33
           },
           "id": 31,
           "targets": [
@@ -1321,7 +1321,7 @@
             "h": 8,
             "w": 8,
             "x": 8,
-            "y": 11
+            "y": 33
           },
           "id": 32,
           "targets": [
@@ -1362,7 +1362,7 @@
             "h": 8,
             "w": 8,
             "x": 16,
-            "y": 11
+            "y": 33
           },
           "id": 33,
           "targets": [
@@ -1403,7 +1403,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 19
+            "y": 41
           },
           "id": 34,
           "targets": [
@@ -1439,7 +1439,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 19
+            "y": 41
           },
           "id": 35,
           "targets": [
@@ -1492,7 +1492,7 @@
             "h": 4,
             "w": 6,
             "x": 0,
-            "y": 12
+            "y": 34
           },
           "id": 11,
           "options": {
@@ -1543,7 +1543,7 @@
             "h": 4,
             "w": 6,
             "x": 6,
-            "y": 12
+            "y": 34
           },
           "id": 12,
           "options": {
@@ -1594,7 +1594,7 @@
             "h": 4,
             "w": 6,
             "x": 12,
-            "y": 12
+            "y": 34
           },
           "id": 13,
           "options": {
@@ -1649,7 +1649,7 @@
             "h": 4,
             "w": 6,
             "x": 18,
-            "y": 12
+            "y": 34
           },
           "id": 14,
           "options": {
@@ -1696,7 +1696,7 @@
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 16
+            "y": 38
           },
           "id": 15,
           "targets": [
@@ -1741,7 +1741,7 @@
             "h": 8,
             "w": 8,
             "x": 8,
-            "y": 16
+            "y": 38
           },
           "id": 16,
           "targets": [
@@ -1781,7 +1781,7 @@
             "h": 8,
             "w": 8,
             "x": 16,
-            "y": 16
+            "y": 38
           },
           "id": 17,
           "targets": [
@@ -1820,7 +1820,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 24
+            "y": 46
           },
           "id": 18,
           "targets": [
@@ -1864,7 +1864,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 24
+            "y": 46
           },
           "id": 19,
           "targets": [
@@ -1921,7 +1921,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 13
+            "y": 35
           },
           "id": 21,
           "options": {
@@ -1969,7 +1969,7 @@
             "h": 8,
             "w": 9,
             "x": 6,
-            "y": 13
+            "y": 35
           },
           "id": 22,
           "targets": [
@@ -2009,7 +2009,7 @@
             "h": 8,
             "w": 9,
             "x": 15,
-            "y": 13
+            "y": 35
           },
           "id": 23,
           "targets": [
@@ -2053,7 +2053,7 @@
             "h": 4,
             "w": 24,
             "x": 0,
-            "y": 21
+            "y": 43
           },
           "id": 24,
           "options": {
@@ -2115,7 +2115,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 14
+            "y": 36
           },
           "id": 41,
           "targets": [
@@ -2165,7 +2165,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 14
+            "y": 36
           },
           "id": 42,
           "targets": [
@@ -2200,7 +2200,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 22
+            "y": 44
           },
           "id": 43,
           "targets": [
@@ -2263,7 +2263,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 22
+            "y": 44
           },
           "id": 44,
           "targets": [
@@ -2316,7 +2316,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 30
+            "y": 52
           },
           "id": 45,
           "options": {
@@ -2696,8 +2696,8 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "histogram_quantile(0.50, rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m]))",
-              "legendFormat": "p50 - {{plugin}} {{operation}}",
+              "expr": "histogram_quantile(0.50, sum by (plugin, operation, le) (rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m])))",
+              "legendFormat": "p50 {{plugin}} {{operation}}",
               "refId": "A"
             },
             {
@@ -2705,8 +2705,8 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "histogram_quantile(0.95, rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m]))",
-              "legendFormat": "p95 - {{plugin}} {{operation}}",
+              "expr": "histogram_quantile(0.95, sum by (plugin, operation, le) (rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m])))",
+              "legendFormat": "p95 {{plugin}} {{operation}}",
               "refId": "B"
             },
             {
@@ -2714,8 +2714,8 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "histogram_quantile(0.99, rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m]))",
-              "legendFormat": "p99 - {{plugin}} {{operation}}",
+              "expr": "histogram_quantile(0.99, sum by (plugin, operation, le) (rate(formae_plugin_operation_duration_ms_milliseconds_bucket[5m])))",
+              "legendFormat": "p99 {{plugin}} {{operation}}",
               "refId": "C"
             }
           ],
@@ -3013,7 +3013,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -3030,26 +3030,26 @@
           },
           {
             "selected": false,
-            "text": "debug",
-            "value": "debug"
+            "text": "DEBUG",
+            "value": "DEBUG"
           },
           {
             "selected": false,
-            "text": "info",
-            "value": "info"
+            "text": "INFO",
+            "value": "INFO"
           },
           {
             "selected": false,
-            "text": "warn",
-            "value": "warn"
+            "text": "WARN",
+            "value": "WARN"
           },
           {
             "selected": false,
-            "text": "error",
-            "value": "error"
+            "text": "ERROR",
+            "value": "ERROR"
           }
         ],
-        "query": "debug,info,warn,error",
+        "query": "DEBUG,INFO,WARN,ERROR",
         "type": "custom"
       },
       {
