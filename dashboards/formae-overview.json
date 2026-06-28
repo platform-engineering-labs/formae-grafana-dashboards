@@ -1,5 +1,4 @@
 {
-  "id": 1,
   "panels": [
     {
       "collapsed": false,
@@ -3066,9 +3065,6 @@
     ]
   },
   "timezone": "browser",
-  "title": "Formae Agent",
-  "uid": "formae-overview",
-  "version": 2,
   "links": [
     {
       "asDropdown": false,

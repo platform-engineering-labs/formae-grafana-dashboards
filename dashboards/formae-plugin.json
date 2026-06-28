@@ -5,7 +5,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [
     {
       "asDropdown": false,
@@ -1632,8 +1631,5 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Formae Plugins",
-  "uid": "formae-plugins",
-  "version": 1,
   "weekStart": ""
 }
