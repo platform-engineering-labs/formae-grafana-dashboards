@@ -448,13 +448,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "formae_resource_errors",
-          "legendFormat": "{{resource_type}}",
+          "expr": "sum by (resource_type, operation) (rate(formae_resource_operation_failures_total{operation!=\"read\"}[$__rate_interval]))",
+          "legendFormat": "{{resource_type}} · {{operation}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Resource Errors",
+      "title": "Resource Operation Failures",
       "type": "timeseries"
     },
     {
