@@ -64,7 +64,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "formae_stacks_total{job=\"formae-agent\"}",
+          "expr": "formae_stacks_total{job=~\"$job\"}",
           "refId": "A"
         }
       ],
@@ -122,7 +122,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(formae_targets_total)",
+          "expr": "sum(formae_targets_total{job=~\"$job\"})",
           "refId": "A"
         }
       ],
@@ -180,7 +180,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(formae_resources_managed)",
+          "expr": "sum(formae_resources_managed{job=~\"$job\"})",
           "refId": "A"
         }
       ],
@@ -238,7 +238,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(formae_resources_unmanaged)",
+          "expr": "sum(formae_resources_unmanaged{job=~\"$job\"})",
           "refId": "A"
         }
       ],
@@ -296,7 +296,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "formae_clients_connected{job=\"formae-agent\"}",
+          "expr": "formae_clients_connected{job=~\"$job\"}",
           "refId": "A"
         }
       ],
@@ -448,7 +448,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (resource_type, operation) (rate(formae_resource_operation_failures_total{operation!=\"read\"}[$__rate_interval]))",
+          "expr": "sum by (resource_type, operation) (rate(formae_resource_operation_failures_total{operation!=\"read\", job=~\"$job\"}[$__rate_interval]))",
           "legendFormat": "{{resource_type}} · {{operation}}",
           "range": true,
           "refId": "A"
@@ -603,7 +603,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "formae_commands_by_state",
+          "expr": "formae_commands_by_state{job=~\"$job\"}",
           "legendFormat": "{{state}}",
           "range": true,
           "refId": "A"
@@ -697,7 +697,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "formae_commands_total",
+          "expr": "formae_commands_total{job=~\"$job\"}",
           "legendFormat": "{{command_type}}",
           "range": true,
           "refId": "A"
@@ -794,7 +794,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "formae_resources_by_type",
+          "expr": "formae_resources_by_type{job=~\"$job\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1227,7 +1227,7 @@
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "go_memory_used_bytes{go_memory_type=\"other\"}",
+              "expr": "go_memory_used_bytes{go_memory_type=\"other\", job=~\"$job\"}",
               "legendFormat": "Heap",
               "range": true,
               "refId": "A"
@@ -1238,7 +1238,7 @@
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "go_memory_used_bytes{go_memory_type=\"stack\"}",
+              "expr": "go_memory_used_bytes{go_memory_type=\"stack\", job=~\"$job\"}",
               "legendFormat": "Stack",
               "range": true,
               "refId": "B"
@@ -2328,7 +2328,7 @@
           },
           "targets": [
             {
-              "expr": "topk(10, max_over_time(histogram_quantile(0.99, sum by (span_name, le) (rate(traces_spanmetrics_latency_bucket{service=\"formae-agent\", span_kind=\"SPAN_KIND_CLIENT\"}[5m])))[$__range:1m]))",
+              "expr": "topk(10, max_over_time(histogram_quantile(0.99, sum by (span_name, le) (rate(traces_spanmetrics_latency_bucket{service=~\"$job\", span_kind=\"SPAN_KIND_CLIENT\"}[5m])))[$__range:1m]))",
               "format": "table",
               "instant": true,
               "legendFormat": "{{span_name}}",
@@ -2412,7 +2412,7 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "rate(formae_rate_limiter_tokens_requested_total[1m])",
+              "expr": "rate(formae_rate_limiter_tokens_requested_total{job=~\"$job\"}[1m])",
               "legendFormat": "{{namespace}} - {{requester}} (requested)",
               "refId": "A"
             },
@@ -2421,7 +2421,7 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "rate(formae_rate_limiter_tokens_granted_total[1m])",
+              "expr": "rate(formae_rate_limiter_tokens_granted_total{job=~\"$job\"}[1m])",
               "legendFormat": "{{namespace}} - {{requester}} (granted)",
               "refId": "B"
             }
@@ -2493,7 +2493,7 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "formae_rate_limiter_bucket_utilization_ratio",
+              "expr": "formae_rate_limiter_bucket_utilization_ratio{job=~\"$job\"}",
               "legendFormat": "{{namespace}}",
               "refId": "A"
             }
@@ -2547,7 +2547,7 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "formae_rate_limiter_bucket_tokens_available",
+              "expr": "formae_rate_limiter_bucket_tokens_available{job=~\"$job\"}",
               "legendFormat": "{{namespace}} (available)",
               "refId": "A"
             },
@@ -2556,7 +2556,7 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "formae_rate_limiter_bucket_capacity",
+              "expr": "formae_rate_limiter_bucket_capacity{job=~\"$job\"}",
               "legendFormat": "{{namespace}} (capacity)",
               "refId": "B"
             }
@@ -2627,7 +2627,7 @@
                 "type": "prometheus",
                 "uid": "prometheus"
               },
-              "expr": "rate(formae_rate_limiter_tokens_granted_total[1m]) / rate(formae_rate_limiter_tokens_requested_total[1m])",
+              "expr": "rate(formae_rate_limiter_tokens_granted_total{job=~\"$job\"}[1m]) / rate(formae_rate_limiter_tokens_requested_total{job=~\"$job\"}[1m])",
               "legendFormat": "{{namespace}} - {{requester}}",
               "refId": "A"
             }
@@ -2947,7 +2947,7 @@
       },
       "targets": [
         {
-          "expr": "{service_name=\"formae-agent\"} | detected_level=~\"$logLevel\" |~ \"$logFilter\"",
+          "expr": "{service_name=~\"$job\"} | detected_level=~\"$logLevel\" |~ \"$logFilter\"",
           "refId": "A"
         }
       ],
@@ -2985,7 +2985,7 @@
         },
         "hide": 0,
         "name": "job",
-        "query": "label_values(go_goroutine_count, job)",
+        "query": "label_values(ergo_node_uptime_seconds{job=~\"formae.*-agent\"}, job)",
         "refresh": 1,
         "type": "query"
       },
