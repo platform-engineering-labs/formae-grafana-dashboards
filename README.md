@@ -10,7 +10,7 @@ A comprehensive dashboard for monitoring the formae agent:
 
 | Section | Metrics |
 |---------|---------|
-| **Formae Stats** | Stacks, targets, managed/unmanaged resources, clients, agent uptime, resource errors, commands by state/type |
+| **Formae Stats** | Stacks, targets, managed/unmanaged resources, clients, agent uptime, resource operation failures, commands by state/type |
 | **Host Metrics** | CPU, memory, network I/O, disk throughput and IOPS |
 | **Process** | Agent CPU and memory usage |
 | **Go Runtime** | Goroutines, memory in use, GC pressure, allocation rate |
@@ -27,7 +27,7 @@ A dedicated dashboard for monitoring formae plugins:
 
 | Section | Metrics |
 |---------|---------|
-| **Plugin Stats** | Targets, managed/unmanaged resources, node uptime, connected nodes, goroutines, resource errors |
+| **Plugin Stats** | Targets, managed/unmanaged resources, node uptime, connected nodes, goroutines, resource operation failures |
 | **Process** | Plugin CPU and memory usage |
 | **Go Runtime** | Goroutines, memory in use, allocation rate, GC pressure |
 | **Ergo Node Metrics** | Processes, zombie processes, memory, CPU, registered entities |
